@@ -191,20 +191,21 @@ export default function Home() {
               key={i}
               className={styles.shape}
               initial={{ 
-                x: `${Math.random() * 100}%`,
-                y: `${Math.random() * 100}%`,
+                x: `${Math.random() * 90 + 5}vw`,
+                y: `${Math.random() * 90 + 5}vh`,
                 scale: 0
               }}
               animate={{ 
-                x: `${Math.random() * 100}%`,
-                y: `${Math.random() * 100}%`,
+                x: [`${Math.random() * 90 + 5}vw`, `${Math.random() * 90 + 5}vw`, `${Math.random() * 90 + 5}vw`],
+                y: [`${Math.random() * 90 + 5}vh`, `${Math.random() * 90 + 5}vh`, `${Math.random() * 90 + 5}vh`],
                 scale: [0, 1, 0],
                 rotate: [0, 180, 360]
               }}
               transition={{
-                duration: Math.random() * 5 + 5,
+                duration: Math.random() * 10 + 15,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
+                times: [0, 0.5, 1]
               }}
             />
           ))}
