@@ -32,6 +32,7 @@
   flex-direction: column;
   gap: 32px;
   grid-row-start: 2;
+  scroll-behavior: smooth;
 }
 
 .main ol {
@@ -166,3 +167,397 @@ a.secondary {
     filter: invert();
   }
 }
+
+.tracker {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  z-index: 1000;
+  font-family: monospace;
+}
+
+.section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.section h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  margin: 0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.section h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.section1 {
+  background-color: #2c3e50;
+}
+
+.section2 {
+  background-color: #27ae60;
+  position: relative;
+  overflow: hidden;
+}
+
+.section2::before {
+  content: '↗';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.1);
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 120px,
+    rgba(255, 255, 255, 0.1) 120px,
+    rgba(255, 255, 255, 0.1) 240px
+  );
+  animation: moveArrows 4s linear infinite;
+}
+
+@keyframes moveArrows {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 240px 240px;
+  }
+}
+
+.section3 {
+  background-color: #e74c3c;
+  position: relative;
+  overflow: hidden;
+}
+
+.floatingShapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.shape {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  backdrop-filter: blur(2px);
+}
+
+.kunai {
+  position: absolute;
+  top: 260px;
+  transform-origin: center center;
+  z-index: 1;
+  filter: drop-shadow(0px 0px 5px rgba(255,255,255,0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  height: 360px;
+}
+
+.horizontalLine {
+  position: absolute;
+  top: 450px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    white,
+    white 50%,
+    rgba(255, 255, 255, 0.7) 50%,
+    rgba(255, 255, 255, 0.3) 75%,
+    transparent
+  );
+  background-size: 20px 2px;
+  background-repeat: repeat-x;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black,
+    black 50%,
+    repeating-linear-gradient(
+      to right,
+      black 0px,
+      black 10px,
+      transparent 10px,
+      transparent 20px
+    ) 50%
+  );
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.personaImage {
+  position: fixed;
+  right: 270px;
+  z-index: 2;
+  width: 600px;
+  height: 900px;
+  background: transparent;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  mix-blend-mode: normal;
+  transform-origin: center center;
+  opacity: 1;
+  transform: translateX(0) rotate(0deg);
+  filter: blur(0px);
+}
+
+.personaImage.exit {
+  opacity: 0;
+  transform: translateX(200px) rotate(10deg);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.personaImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent !important;
+  mix-blend-mode: normal;
+  filter: none;
+}
+
+.circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+}
+
+.pulsingCircle {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Update text styles to ensure they're above animations */
+.section3 h1, .section3 h2 {
+  position: relative;
+  z-index: 1;
+}
+
+.section3 h2 span {
+  display: inline-block;
+  margin: 0 1px;
+}
+
+/* Sharingan Effect */
+.sharinganPattern {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #800000 0%, #cc0000 100%);
+  box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+}
+
+.tomoe {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  background: #000;
+  border-radius: 50% 0 50% 50%;
+}
+
+/* Chakra Flow Effect */
+.chakraParticle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(100, 149, 237, 0.8);
+  border-radius: 50%;
+  filter: blur(3px);
+}
+
+/* Lightning Effect */
+.lightning {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 45%, #fff 49%, #fff 51%, transparent 55%);
+  filter: blur(1px);
+}
+
+/* Mist Effect */
+.mistCloud {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(20px);
+}
+
+.scene3d {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.card3d {
+  position: absolute;
+  width: 300px;
+  height: 400px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.content3d {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.section3 {
+  background-color: #1a1a1a;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.fireContainer {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  z-index: 3;
+  filter: url(#glow);
+}
+
+.firePart {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at center, 
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.7) 30%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  border-radius: 50%;
+  transform-origin: center bottom;
+  mix-blend-mode: screen;
+  filter: blur(25px);
+}
+
+/* Add this to the top of section3 content */
+.section3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cursorTrail {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+.scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #fff, rgba(255,255,255,0.5));
+  transform-origin: 0%;
+  z-index: 1000;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  transform-origin: center;
+}
+
+.section h1 span,
+.section h2 span {
+  display: inline-block;
+  white-space: pre;
+}
+
+.magneticButton {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.magneticButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Remove the cursorTrail styles */
