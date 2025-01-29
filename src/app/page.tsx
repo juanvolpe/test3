@@ -15,8 +15,8 @@ export default function Home() {
   const [ballPosition, setBallPosition] = useState(270)
   const [ballRotation, setBallRotation] = useState(0)
   const [imagePosition, setImagePosition] = useState('absolute')
-  const [imageTop, setImageTop] = useState(window.innerHeight - 300)  // Start at bottom of screen
-  const [imageVisible, setImageVisible] = useState(true)  // Add this state
+  const [imageTop, setImageTop] = useState(0)  // Initialize with 0
+  const [imageVisible, setImageVisible] = useState(true)
   const [hasInitialized, setHasInitialized] = useState(false)
   const [ripples, setRipples] = useState<{x: number, y: number, id: number}[]>([])
 
@@ -24,6 +24,9 @@ export default function Home() {
   const isSection1InView = useInView(section1Ref, { once: false })
 
   useEffect(() => {
+    // Set initial image top position after component mounts
+    setImageTop(window.innerHeight - 300)
+    
     // Initial scroll check
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight
     const initialPercent = (window.scrollY / maxScroll) * 100
@@ -188,13 +191,13 @@ export default function Home() {
               key={i}
               className={styles.shape}
               initial={{ 
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: `${Math.random() * 100}%`,
+                y: `${Math.random() * 100}%`,
                 scale: 0
               }}
               animate={{ 
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: `${Math.random() * 100}%`,
+                y: `${Math.random() * 100}%`,
                 scale: [0, 1, 0],
                 rotate: [0, 180, 360]
               }}
