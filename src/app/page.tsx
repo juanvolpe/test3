@@ -186,29 +186,57 @@ export default function Home() {
         onClick={handleClick}
       >
         <motion.div className={styles.floatingShapes}>
-          {[...Array(10)].map((_, i) => (
-            <motion.div
-              key={i}
-              className={styles.shape}
-              initial={{ 
-                x: `${Math.random() * 90 + 5}vw`,
-                y: `${Math.random() * 90 + 5}vh`,
-                scale: 0
-              }}
-              animate={{ 
-                x: [`${Math.random() * 90 + 5}vw`, `${Math.random() * 90 + 5}vw`, `${Math.random() * 90 + 5}vw`],
-                y: [`${Math.random() * 90 + 5}vh`, `${Math.random() * 90 + 5}vh`, `${Math.random() * 90 + 5}vh`],
-                scale: [0, 1, 0],
-                rotate: [0, 180, 360]
-              }}
-              transition={{
-                duration: Math.random() * 10 + 15,
-                repeat: Infinity,
-                ease: "easeInOut",
-                times: [0, 0.5, 1]
-              }}
-            />
-          ))}
+          {[...Array(10)].map((_, i) => {
+            const baseX = Math.random() * 90 + 5;
+            const baseY = Math.random() * 90 + 5;
+            
+            // Use useEffect to handle window reference
+            const [offset, setOffset] = useState({ x: 0, y: 0 });
+            
+            useEffect(() => {
+              if (typeof window === 'undefined') return;
+              
+              // Calculate distance from mouse and apply repulsion
+              const dx = mouseX - (baseX * window.innerWidth / 100);
+              const dy = mouseY - (baseY * window.innerHeight / 100);
+              const distance = Math.sqrt(dx * dx + dy * dy);
+              const repulsionRadius = 300; // Increased radius for earlier reaction
+              const repulsionStrength = Math.max(0, 1 - distance / repulsionRadius) * 3; // Reduced strength
+              
+              const offsetX = dx * repulsionStrength / distance || 0;
+              const offsetY = dy * repulsionStrength / distance || 0;
+              
+              // Smooth the transition with interpolation
+              setOffset(prev => ({
+                x: prev.x + (offsetX - prev.x) * 0.1,
+                y: prev.y + (offsetY - prev.y) * 0.1
+              }));
+            }, [mouseX, mouseY, baseX, baseY]);
+
+            return (
+              <motion.div
+                key={i}
+                className={styles.shape}
+                initial={{ 
+                  x: `${baseX}vw`,
+                  y: `${baseY}vh`,
+                  scale: 0
+                }}
+                animate={{ 
+                  x: `calc(${baseX}vw - ${offset.x}px)`,
+                  y: `calc(${baseY}vh - ${offset.y}px)`,
+                  scale: [0, 1, 0],
+                  rotate: [0, 180, 360]
+                }}
+                transition={{
+                  x: { type: "spring", stiffness: 50, damping: 20 }, // Reduced stiffness and damping
+                  y: { type: "spring", stiffness: 50, damping: 20 }, // for smoother movement
+                  scale: { duration: Math.random() * 10 + 15, repeat: Infinity, ease: "easeInOut", times: [0, 0.5, 1] },
+                  rotate: { duration: Math.random() * 10 + 15, repeat: Infinity, ease: "easeInOut" }
+                }}
+              />
+            );
+          })}
         </motion.div>
 
         <motion.div 
